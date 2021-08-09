@@ -18,7 +18,7 @@ class BamDemoStepsStack(cdk.Stack):
                                             "consultorCatalogo",
                                             runtime=_lambda.Runtime.PYTHON_3_8,
                                             code=_lambda.Code.from_asset("resources"),
-                                            handler="consultorCatalogo.handler"
+                                            handler="consultorCatalogo.lambda_handler"
                                             )
         traductorxml = _lambda.Function(self, 
                                         "traductorxml",
