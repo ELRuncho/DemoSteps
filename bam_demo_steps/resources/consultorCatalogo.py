@@ -11,7 +11,7 @@ def lambda_handler(event, context):
         }
     )
     item = response['Item']
-    return {
-        'statusCode': 200,
-        'body': json.dumps('Hello from Lambda!')
-    }
+    return item#{
+        #'statusCode': 200,
+        #'body': json.dumps('Hello from Lambda!')
+    #}
