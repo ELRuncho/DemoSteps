@@ -19,7 +19,7 @@ setuptools.setup(
     packages=setuptools.find_packages(where="bam_demo_steps"),
 
     install_requires=[
-        "aws-cdk.core==1.109.0",
+        "aws-cdk.core==1.117.0",
     ],
 
     python_requires=">=3.6",
