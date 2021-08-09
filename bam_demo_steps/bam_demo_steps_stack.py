@@ -1,12 +1,7 @@
-from aws_cdk import core as cdk
-
-# For consistency with other languages, `cdk` is the preferred import name for
-# the CDK's core module.  The following line also imports it as `core` for use
-# with examples from the CDK Developer's Guide, which are in the process of
-# being updated to use `cdk`.  You may delete this import if you don't need it.
-from aws_cdk import core
-import aws_cdk.aws_dynamodb as dynamodb
-
+from aws_cdk import (core as cdk,
+                        aws_apigateway as _apigateway,
+                        aws_lambda as _lambda,
+                        aws_dynamodb as dynamodb)
 
 class BamDemoStepsStack(cdk.Stack):
 
@@ -14,8 +9,21 @@ class BamDemoStepsStack(cdk.Stack):
         super().__init__(scope, construct_id, **kwargs)
 
         # The code that defines your stack goes here
-        catalogo= dynamodb.Table(self, 
+        catalogo = dynamodb.Table(self, 
             "Catalogo",
             partition_key=dynamodb.Attribute(name="TipoTransaccion", type=dynamodb.AttributeType.STRING)
         )
+
+        consultaCatalogo = _lambda.Function(self,
+                                            "consultorCatalogo",
+                                            runtime=_lambda.Runtime.PYTHON_3_8,
+                                            handler="consultorCatalogo.handler"
+                                            )
+        traductorxml = _lambda.Function(self, 
+                                        "traductorxml",
+                                        runtime=_lambda.Runtime.PYTHON_3_8,
+                                        handler="traductorxml.handler"
+                                        )
+
+
 
