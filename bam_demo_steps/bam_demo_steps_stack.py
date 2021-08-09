@@ -27,5 +27,6 @@ class BamDemoStepsStack(cdk.Stack):
                                         handler="traductorxml.lambda_handler"
                                         )
 
+        catalogo.grant_read_data(consultaCatalogo)
 
 
