@@ -38,6 +38,8 @@ class BamDemoStepsStack(cdk.Stack):
         api_integration = _apigateway.LambdaIntegration(consultaCatalogo,
                                 request_templates = {"application/json": '{"statusCode":"200"}'}
                                 )
-        api.root.add_method("PUT",api_integration)
+
+        api.root.add_method("POST",api_integration)
+        api.root.add_method("GET",api_integration)
 
 
