@@ -29,4 +29,15 @@ class BamDemoStepsStack(cdk.Stack):
 
         catalogo.grant_read_data(consultaCatalogo)
 
+        api = _apigateway.RestApi(
+                    self,
+                    "pagos-api",
+                    rest_api_name="Pagos",
+                    description="esta API procesa servicios de pagos"
+                )
+        api_integration = _apigateway.LambdaIntegration(consultaCatalogo,
+                                request_templates = {"application/json": '{"statusCode":"200"}'}
+                                )
+        api.root.add_method("PUT",api_integration)
+
 
