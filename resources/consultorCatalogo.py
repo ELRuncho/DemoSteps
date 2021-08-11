@@ -2,7 +2,7 @@ import json
 import boto3
 
 dynamodb = boto3.resource('dynamodb')
-table = dynamodb.Table('Catalogo') 
+table = dynamodb.Table('BamDemoStepsStack-Catalogo61A2213A-2W2J065BGE26') 
 def lambda_handler(event, context):
     # TODO implement
     response = table.get_item(
