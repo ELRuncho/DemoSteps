@@ -48,13 +48,15 @@ class BamDemoStepsStack(cdk.Stack):
                                                     input_path="$.guid",
                                                     output_path="$.Payload"
                                                     )
-        
 
-        sfn_definition = consultar_catalogo.next(traducirYenviar_pago).next(sfn.Choice(self, "Completado"))
+        End_state = sfn.Pass(self, "EndState")
+
+        #sfn_definition = consultar_catalogo.next(traducirYenviar_pago).next(End_state)
+        sfn_definition = sfn.Chain.start(consultar_catalogo).next(traducirYenviar_pago).next(End_state)
 
         sfn.StateMachine(self, 
                         "ProcesoPagos",
-                        definition=sfn_definition)
+                        definition=sfn_definition,)
 
         api = _apigateway.RestApi(
                     self,
