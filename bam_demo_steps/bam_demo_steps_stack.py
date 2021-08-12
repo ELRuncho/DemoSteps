@@ -13,7 +13,7 @@ class BamDemoStepsStack(cdk.Stack):
 
         # The code that defines your stack goes here
         topic = sns.Topic(self, "FinalProceso",
-            dysplay_name="Proceso pago completado"
+            display_name="Proceso pago completado"
         )
 
         catalogo = dynamodb.Table(self, 
