@@ -30,10 +30,31 @@ class BamDemoStepsStack(cdk.Stack):
                                         )
 
         catalogo.grant_read_data(consultaCatalogo)
-        start_state = sfn.Pass(self, "StartState")
+
+        #----------------------------------------------------------------
+        # defining sfn tasks and flow
+        #----------------------------------------------------------------
+        consultar_catalogo = sfntasks.LambdaInvoke(
+                                                    self, 
+                                                    "consultar",
+                                                    lambda_function=consultaCatalogo,
+                                                    output_path="$.Payload"
+                                                    )
+        
+        traducirYenviar_pago = sfntasks.LambdaInvoke(
+                                                    self,
+                                                    "Traducir_y_enviar",
+                                                    lambda_function=traductorxml,
+                                                    input_path="$.guid",
+                                                    output_path="$.Payload"
+                                                    )
+        
+
+        sfn_definition = consultar_catalogo.next(traducirYenviar_pago).next(sfn.Choice(self, "Completado"))
+
         sfn.StateMachine(self, 
                         "ProcesoPagos",
-                        definition=start_state)
+                        definition=sfn_definition)
 
         api = _apigateway.RestApi(
                     self,
