@@ -30,8 +30,10 @@ class BamDemoStepsStack(cdk.Stack):
                                         )
 
         catalogo.grant_read_data(consultaCatalogo)
-
-
+        start_state = sfn.Pass(self, "StartState")
+        sfn.StateMachine(self, 
+                        "ProcesoPagos",
+                        definition=start_state)
 
         api = _apigateway.RestApi(
                     self,
