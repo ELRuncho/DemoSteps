@@ -1,8 +1,9 @@
 import json
+from os import environ
 import boto3
 
 dynamodb = boto3.resource('dynamodb')
-table = dynamodb.Table('BamDemoStepsStack-Catalogo61A2213A-2W2J065BGE26') 
+table = dynamodb.Table(environ.get('TABLE_NAME')) 
 def lambda_handler(event, context):
     # TODO implement
     payload = json.loads(event['body'])

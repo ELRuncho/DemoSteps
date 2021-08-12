@@ -3,7 +3,8 @@ from aws_cdk import (core as cdk,
                         aws_lambda as _lambda,
                         aws_dynamodb as dynamodb,
                         aws_stepfunctions as sfn,
-                        aws_stepfunctions_tasks as sfntasks)
+                        aws_stepfunctions_tasks as sfntasks,
+                        aws_sns as sns)
 
 class BamDemoStepsStack(cdk.Stack):
 
@@ -11,6 +12,10 @@ class BamDemoStepsStack(cdk.Stack):
         super().__init__(scope, construct_id, **kwargs)
 
         # The code that defines your stack goes here
+        topic = sns.Topic(self, "FinalProceso",
+            dysplay_name="Proceso pago completado"
+        )
+
         catalogo = dynamodb.Table(self, 
             "Catalogo",
             partition_key=dynamodb.Attribute(name="TipoTransaccion", type=dynamodb.AttributeType.STRING)
@@ -20,7 +25,10 @@ class BamDemoStepsStack(cdk.Stack):
                                             "consultorCatalogo",
                                             runtime=_lambda.Runtime.PYTHON_3_8,
                                             code=_lambda.Code.from_asset("resources"),
-                                            handler="consultorCatalogo.lambda_handler"
+                                            handler="consultorCatalogo.lambda_handler",
+                                            environment={
+                                                'TABLE_NAME': catalogo.table_name
+                                            }
                                             )
         traductorxml = _lambda.Function(self, 
                                         "traductorxml",
