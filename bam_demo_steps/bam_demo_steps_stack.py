@@ -52,7 +52,7 @@ class BamDemoStepsStack(cdk.Stack):
         End_state = sfn.Pass(self, "EndState")
 
         #sfn_definition = consultar_catalogo.next(traducirYenviar_pago).next(End_state)
-        sfn_definition = sfn.Chain.start(consultar_catalogo).next(traducirYenviar_pago).next(End_state)
+        sfn_definition = sfn.Chain.start(consultar_catalogo).next(traducirYenviar_pago)
 
         sfn.StateMachine(self, 
                         "ProcesoPagos",
