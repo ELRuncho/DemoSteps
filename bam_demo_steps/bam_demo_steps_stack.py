@@ -1,7 +1,9 @@
 from aws_cdk import (core as cdk,
                         aws_apigateway as _apigateway,
                         aws_lambda as _lambda,
-                        aws_dynamodb as dynamodb)
+                        aws_dynamodb as dynamodb,
+                        aws_stepfunctions as sfn,
+                        aws_stepfunctions_tasks as sfntasks)
 
 class BamDemoStepsStack(cdk.Stack):
 
@@ -29,6 +31,8 @@ class BamDemoStepsStack(cdk.Stack):
 
         catalogo.grant_read_data(consultaCatalogo)
 
+
+
         api = _apigateway.RestApi(
                     self,
                     "pagos-api",
@@ -40,6 +44,7 @@ class BamDemoStepsStack(cdk.Stack):
                                 )
 
         api.root.add_method("POST",api_integration)
-        api.root.add_method("GET",api_integration)
+
+
 
 
