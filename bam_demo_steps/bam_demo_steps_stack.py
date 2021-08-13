@@ -67,6 +67,14 @@ class BamDemoStepsStack(cdk.Stack):
                                 subject="fallo el proceso de pago"
                             ).next(fallo1)
 
+        fallo_en_traduccion = sfntasks.SnsPublish(
+                                self,
+                                "No_se_completo_transaccion",
+                                topic=topic,
+                                message=sfn.TaskInput.from_text("algo salio mal con el pago"),
+                                subject="fallo el proceso de pago"
+                            ).next(fallo2)
+
         consultar_catalogo = sfntasks.LambdaInvoke(
                                                     self, 
                                                     "consultarCatalogo",
@@ -80,7 +88,7 @@ class BamDemoStepsStack(cdk.Stack):
                                                     lambda_function=traductorxml,
                                                     input_path="$.guid",
                                                     output_path="$.Payload"
-                                                    )
+                                                    ).add_catch(fallo_en_traduccion)
 
         sfn_definition = sfn.Chain.start(consultar_catalogo).next(traducirYenviar_pago).next(completado)
 
