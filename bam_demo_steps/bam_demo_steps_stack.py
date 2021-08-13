@@ -14,7 +14,7 @@ class BamDemoStepsStack(cdk.Stack):
 
         # The code that defines your stack goes here
         topic = sns.Topic(self, "FinalProceso",
-            display_name="Proceso pago completado"
+            display_name="Proceso pagos"
         )
         topic.add_subscription(snsSubs.EmailSubscription(email_address='raffran@amazon.com'))
 

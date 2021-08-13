@@ -6,4 +6,5 @@ aws-cdk.aws_sns
 aws-cdk.aws_apigateway
 aws-cdk.aws_stepfunctions
 aws-cdk.aws_stepfunctions_tasks
+aws-cdk.aws_sns_subscriptions
 
