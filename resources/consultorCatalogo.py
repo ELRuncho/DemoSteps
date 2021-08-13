@@ -10,7 +10,7 @@ def lambda_handler(event, context):
     try:
         response = table.get_item(
             Key={
-                'TipoTransaccion': event
+                'TipoTransaccion': event['tipo']
             }
         )
         return response['Item']
