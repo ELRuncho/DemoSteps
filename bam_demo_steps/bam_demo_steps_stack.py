@@ -4,7 +4,8 @@ from aws_cdk import (core as cdk,
                         aws_dynamodb as dynamodb,
                         aws_stepfunctions as sfn,
                         aws_stepfunctions_tasks as sfntasks,
-                        aws_sns as sns)
+                        aws_sns as sns,
+                        aws_sns_subscriptions as snsSubs)
 
 class BamDemoStepsStack(cdk.Stack):
 
@@ -15,6 +16,7 @@ class BamDemoStepsStack(cdk.Stack):
         topic = sns.Topic(self, "FinalProceso",
             display_name="Proceso pago completado"
         )
+        topic.add_subscription(snsSubs.EmailSubscription(email_address='raffran@amazon.com'))
 
         catalogo = dynamodb.Table(self, 
             "Catalogo",
