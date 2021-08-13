@@ -34,6 +34,7 @@ class BamDemoStepsStack(cdk.Stack):
                                                 'TABLE_NAME': catalogo.table_name
                                             }
                                             )
+                                            
         traductorxml = _lambda.Function(self, 
                                         "traductorxml",
                                         runtime=_lambda.Runtime.PYTHON_3_8,
