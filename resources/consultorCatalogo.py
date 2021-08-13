@@ -6,11 +6,11 @@ dynamodb = boto3.resource('dynamodb')
 table = dynamodb.Table(environ.get('TABLE_NAME')) 
 def lambda_handler(event, context):
     # TODO implement
-    payload = json.loads(event['body'])
+    #payload = json.loads(event['body'])
     try:
         response = table.get_item(
             Key={
-                'TipoTransaccion': payload['tipo']
+                'TipoTransaccion': event
             }
         )
         return response['Item']
