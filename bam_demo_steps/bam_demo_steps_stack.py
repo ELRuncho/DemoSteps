@@ -21,6 +21,8 @@ class BamDemoStepsStack(cdk.Stack):
             partition_key=dynamodb.Attribute(name="TipoTransaccion", type=dynamodb.AttributeType.STRING)
         )
 
+        
+
         consultaCatalogo = _lambda.Function(self,
                                             "consultorCatalogo",
                                             runtime=_lambda.Runtime.PYTHON_3_8,
@@ -59,9 +61,19 @@ class BamDemoStepsStack(cdk.Stack):
 
         sfn_definition = sfn.Chain.start(consultar_catalogo).next(traducirYenviar_pago)
 
-        sfn.StateMachine(self, 
+        Machine = sfn.StateMachine(self, 
                         "ProcesoPagos",
                         definition=sfn_definition,)
+
+        invokadorSfn = _lambda.Function(self,
+                                            "invokadorSFN",
+                                            runtime=_lambda.Runtime.PYTHON_3_8,
+                                            code=_lambda.Code.from_asset("resources"),
+                                            handler="invokador.lambda_handler",
+                                            environment={
+                                                'SFNARN': Machine.stateMachineArn
+                                            }
+                                            )
 
         api = _apigateway.RestApi(
                     self,
@@ -69,7 +81,7 @@ class BamDemoStepsStack(cdk.Stack):
                     rest_api_name="Pagos",
                     description="esta API procesa servicios de pagos"
                 )
-        api_integration = _apigateway.LambdaIntegration(consultaCatalogo,
+        api_integration = _apigateway.LambdaIntegration(invokadorSfn,
                                 request_templates = {"application/json": '{"statusCode":"200"}'}
                                 )
 
