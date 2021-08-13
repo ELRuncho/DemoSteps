@@ -34,7 +34,7 @@ class BamDemoStepsStack(cdk.Stack):
                                                 'TABLE_NAME': catalogo.table_name
                                             }
                                             )
-                                            
+
         traductorxml = _lambda.Function(self, 
                                         "traductorxml",
                                         runtime=_lambda.Runtime.PYTHON_3_8,
@@ -50,7 +50,7 @@ class BamDemoStepsStack(cdk.Stack):
 
         completado = sfn.Succeed(self, "lo logramos!")
 
-        fallo1 = sfn.Fail(self, "No exite el tipo",
+        fallo1 = sfn.Fail(self, "No existe el tipo",
             error="Tipo de Pago",
             cause = "No existe el tipo de pago"
         )
