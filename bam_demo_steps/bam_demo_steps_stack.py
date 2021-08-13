@@ -46,12 +46,21 @@ class BamDemoStepsStack(cdk.Stack):
         #----------------------------------------------------------------
         # defining sfn tasks and flow
         #----------------------------------------------------------------
+
+        fallo_en_catalogo = sfntasks.SnsPublish(
+                                self,
+                                "No_se_econtro_tipo_de_pago",
+                                topic=topic,
+                                message="No se encontro el tipo de pago",
+                                subject="fallo el proceso de pago"
+                            )
+
         consultar_catalogo = sfntasks.LambdaInvoke(
                                                     self, 
                                                     "consultarCatalogo",
                                                     lambda_function=consultaCatalogo,
                                                     output_path="$.Payload"
-                                                    )
+                                                    ).add_catch()
         
         traducirYenviar_pago = sfntasks.LambdaInvoke(
                                                     self,
