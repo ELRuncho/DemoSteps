@@ -51,7 +51,7 @@ class BamDemoStepsStack(cdk.Stack):
                                 self,
                                 "No_se_econtro_tipo_de_pago",
                                 topic=topic,
-                                message="No se encontro el tipo de pago",
+                                message=sfn.TaskInput.from_text("no se encontro el tipo de pago"),
                                 subject="fallo el proceso de pago"
                             )
 
