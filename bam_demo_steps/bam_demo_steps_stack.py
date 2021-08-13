@@ -49,12 +49,12 @@ class BamDemoStepsStack(cdk.Stack):
 
         completado = sfn.Succeed(self, "lo logramos!")
 
-        fallo1 = sfn.Fail(self, "fail1",
+        fallo1 = sfn.Fail(self, "No exite el tipo",
             error="Tipo de Pago",
             cause = "No existe el tipo de pago"
         )
 
-        fallo2 = sfn.Fail(self,"fallo2",
+        fallo2 = sfn.Fail(self,"fallo traduccion",
             error="traduccion",
             cause="algo salio mal en el traductor"
         )
