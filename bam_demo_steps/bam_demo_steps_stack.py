@@ -72,7 +72,7 @@ class BamDemoStepsStack(cdk.Stack):
                                 self,
                                 "No_se_completo_transaccion",
                                 topic=topic,
-                                message=sfn.TaskInput.from_text("algo salio mal con el pago"),
+                                message=sfn.TaskInput.from_text("algo salio mal con el pago en el destino"),
                                 subject="fallo el proceso de pago"
                             ).next(fallo2)
 
