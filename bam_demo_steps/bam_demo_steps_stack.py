@@ -87,7 +87,6 @@ class BamDemoStepsStack(cdk.Stack):
                                                     self,
                                                     "Traducir_y_enviar",
                                                     lambda_function=traductorxml,
-                                                    input_path="$.guid",
                                                     output_path="$.Payload"
                                                     ).add_catch(fallo_en_traduccion)
 

@@ -11,4 +11,4 @@ def lambda_handler(event, context):
         print(payload)
         return payload
     elif roll >= 6:
-        return "la transaccion fallo en el servidor destino"
+        raise Exception("la transaccion fallo en el servidor destino")
