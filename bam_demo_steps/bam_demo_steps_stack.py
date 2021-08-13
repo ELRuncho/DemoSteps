@@ -60,7 +60,7 @@ class BamDemoStepsStack(cdk.Stack):
                                                     "consultarCatalogo",
                                                     lambda_function=consultaCatalogo,
                                                     output_path="$.Payload"
-                                                    ).add_catch()
+                                                    ).add_catch(fallo_en_catalogo)
         
         traducirYenviar_pago = sfntasks.LambdaInvoke(
                                                     self,
