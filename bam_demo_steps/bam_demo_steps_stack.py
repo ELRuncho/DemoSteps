@@ -51,7 +51,7 @@ class BamDemoStepsStack(cdk.Stack):
 
         fallo1 = sfn.Fail(self, "fail1",
             error="Tipo de Pago",
-            causa = "No existe el tipo de pago"
+            cause = "No existe el tipo de pago"
         )
 
         fallo2 = sfn.Fail(self,"fallo2",
