@@ -6,14 +6,19 @@ dynamodb = boto3.resource('dynamodb')
 table = dynamodb.Table(environ.get('TABLE_NAME')) 
 def lambda_handler(event, context):
     # TODO implement
-    #payload = json.loads(event['body'])
+    response={}
+
     try:
-        response = table.get_item(
+        responsedb = table.get_item(
             Key={
                 'TipoTransaccion': event['tipo']
             }
         )
-        print(response)
-        return response['Item']+event
+
+        response['origin']=event
+        response['db']= responsedb['Item']
+
+        return response
+        
     except:
         raise Exception ("Registro no encontrado")

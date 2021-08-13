@@ -29,7 +29,7 @@ class BamDemoStepsStack(cdk.Stack):
                                             "consultorCatalogo",
                                             runtime=_lambda.Runtime.PYTHON_3_8,
                                             code=_lambda.Code.from_asset("resources"),
-                                            handler="consultorCatalogo.lambda_handler",
+                                            handler="consultas/consultorCatalogo.lambda_handler",
                                             environment={
                                                 'TABLE_NAME': catalogo.table_name
                                             }
@@ -39,7 +39,7 @@ class BamDemoStepsStack(cdk.Stack):
                                         "traductorxml",
                                         runtime=_lambda.Runtime.PYTHON_3_8,
                                         code=_lambda.Code.from_asset("resources"),
-                                        handler="traductorxml.lambda_handler"
+                                        handler="traduccion/traductorxml.lambda_handler"
                                         )
 
         catalogo.grant_read_data(consultaCatalogo)
@@ -101,7 +101,7 @@ class BamDemoStepsStack(cdk.Stack):
                                             "invokadorSFN",
                                             runtime=_lambda.Runtime.PYTHON_3_8,
                                             code=_lambda.Code.from_asset("resources"),
-                                            handler="invokador.lambda_handler",
+                                            handler="invocacion/invokador.lambda_handler",
                                             environment={
                                                 'SFNARN': Machine.state_machine_arn
                                             }
