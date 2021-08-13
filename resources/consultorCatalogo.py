@@ -13,8 +13,6 @@ def lambda_handler(event, context):
                 'TipoTransaccion': payload['tipo']
             }
         )
-        item = response['Item']
-    except Exception as e:
-        item = e
-    
-    return item
+        return response['Item']
+    except:
+        raise Exception ("Registro no encontrado")
