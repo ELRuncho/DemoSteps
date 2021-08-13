@@ -13,6 +13,7 @@ def lambda_handler(event, context):
                 'TipoTransaccion': event['tipo']
             }
         )
+        print(response)
         return response['Item']+event
     except:
         raise Exception ("Registro no encontrado")
