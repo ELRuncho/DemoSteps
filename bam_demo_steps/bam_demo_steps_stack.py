@@ -47,13 +47,25 @@ class BamDemoStepsStack(cdk.Stack):
         # defining sfn tasks and flow
         #----------------------------------------------------------------
 
+        completado = sfn.Succeed(self, "lo logramos!")
+
+        fallo1 = sfn.Fail(self, "fail1",
+            error="Tipo de Pago",
+            causa = "No existe el tipo de pago"
+        )
+
+        fallo2 = sfn.Fail(self,"fallo2",
+            error="traduccion",
+            cause="algo salio mal en el traductor"
+        )
+
         fallo_en_catalogo = sfntasks.SnsPublish(
                                 self,
                                 "No_se_econtro_tipo_de_pago",
                                 topic=topic,
                                 message=sfn.TaskInput.from_text("no se encontro el tipo de pago"),
                                 subject="fallo el proceso de pago"
-                            )
+                            ).next(fallo1)
 
         consultar_catalogo = sfntasks.LambdaInvoke(
                                                     self, 
@@ -70,7 +82,7 @@ class BamDemoStepsStack(cdk.Stack):
                                                     output_path="$.Payload"
                                                     )
 
-        sfn_definition = sfn.Chain.start(consultar_catalogo).next(traducirYenviar_pago)
+        sfn_definition = sfn.Chain.start(consultar_catalogo).next(traducirYenviar_pago).next(completado)
 
         Machine = sfn.StateMachine(self, 
                         "ProcesoPagos",
