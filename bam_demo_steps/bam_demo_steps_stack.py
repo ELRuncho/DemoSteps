@@ -44,7 +44,7 @@ class BamDemoStepsStack(cdk.Stack):
         #----------------------------------------------------------------
         consultar_catalogo = sfntasks.LambdaInvoke(
                                                     self, 
-                                                    "consultar",
+                                                    "consultarCatalogo",
                                                     lambda_function=consultaCatalogo,
                                                     output_path="$.Payload"
                                                     )
