@@ -75,6 +75,8 @@ class BamDemoStepsStack(cdk.Stack):
                                             }
                                             )
 
+        Machine.grant_start_execution(invokadorSfn)
+
         api = _apigateway.RestApi(
                     self,
                     "pagos-api",
