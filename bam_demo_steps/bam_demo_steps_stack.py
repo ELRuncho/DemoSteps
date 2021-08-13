@@ -71,7 +71,7 @@ class BamDemoStepsStack(cdk.Stack):
                                             code=_lambda.Code.from_asset("resources"),
                                             handler="invokador.lambda_handler",
                                             environment={
-                                                'SFNARN': Machine.stateMachineArn
+                                                'SFNARN': Machine.state_machine_arn
                                             }
                                             )
 
